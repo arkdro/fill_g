@@ -2,10 +2,20 @@ package main
 
 import (
 	"github.com/asdf/fill_g/fill"
+
+	"encoding/json"
+	"errors"
 	"flag"
-	"log"
 	"io/ioutil"
+	"log"
 )
+
+type Request struct {
+	Start_point fill.Node
+	Color int
+	Input_data fill.Plate
+	Expected_data fill.Plate
+}
 
 func main() {
 	var file = flag.String("infile", "", "input file")
@@ -44,6 +54,38 @@ func get_files_in_dir(dir string) []string {
 func process_files(files []string) {
 	for _, file := range files {
 		log.Printf("process_files, file: %v", file)
+		request, err := read_request(file)
+		if err != nil {
+			continue
+		}
+		log.Printf("process_files, request: %+v", request)
 	}
+}
+
+func read_request(file string) (Request, error) {
+	var request Request
+	bin_data, err := ioutil.ReadFile(file)
+	if err != nil {
+		log.Printf("can't read file '%v': %v", file, err)
+		return request, err
+	}
+	err = json.Unmarshal(bin_data, &request)
+	if err != nil {
+		log.Printf("can't parse file '%v': %v", file, err)
+		return request, err
+	}
+	if !valid_data(request.Input_data) {
+		log.Printf("invalid plate data in file: %v", file)
+		return request, errors.New("invalid plate data")
+	}
+	if !valid_data(request.Expected_data) {
+		log.Printf("invalid expected data in file: %v", file)
+		return request, errors.New("invalid expected data")
+	}
+	return request, nil
+}
+
+func valid_data(plate fill.Plate) bool {
+	return true
 }
 
