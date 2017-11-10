@@ -59,6 +59,11 @@ func process_files(files []string) {
 			continue
 		}
 		log.Printf("process_files, request: %+v", request)
+		result := fill.Run(request.Start_point, request.Color, request.Input_data)
+		if !plates_equal(result, request.Expected_data) {
+			log.Printf("process_files, result mismatch for file: %v", file)
+			write_result(file, result)
+		}
 	}
 }
 
@@ -87,5 +92,20 @@ func read_request(file string) (Request, error) {
 
 func valid_data(plate fill.Plate) bool {
 	return true
+}
+
+func plates_equal(result fill.Plate, expected fill.Plate) bool {
+	return true
+}
+
+func write_result(file string, result fill.Plate) {
+	data, err := json.Marshal(result)
+	if err != nil {
+		log.Printf("can't encode result to json for file '%v': %v\n%+v",
+			file, err, result)
+		return
+	}
+	fname := file + "-result"
+	ioutil.WriteFile(fname, data, 0644)
 }
 
