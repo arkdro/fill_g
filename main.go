@@ -14,10 +14,10 @@ import (
 )
 
 type Request struct {
-	Start_point fill.Node
+	Start_point node.Node
 	Color int
-	Input_data fill.Plate
-	Expected_data fill.Plate
+	Input_data plate.Plate
+	Expected_data plate.Plate
 }
 
 func main() {
@@ -93,11 +93,11 @@ func read_request(file string) (Request, error) {
 	return request, nil
 }
 
-func plates_equal(result fill.Plate, expected fill.Plate) bool {
+func plates_equal(result plate.Plate, expected plate.Plate) bool {
 	return reflect.DeepEqual(result, expected)
 }
 
-func write_result(file string, result fill.Plate) {
+func write_result(file string, result plate.Plate) {
 	data, err := json.Marshal(result)
 	if err != nil {
 		log.Printf("can't encode result to json for file '%v': %v\n%+v",
@@ -108,7 +108,7 @@ func write_result(file string, result fill.Plate) {
 	ioutil.WriteFile(fname, data, 0644)
 }
 
-func run_request(request Request) fill.Plate {
+func run_request(request Request) plate.Plate {
 	result := fill.Run(request.Start_point, request.Color, request.Input_data)
 	return result
 }
