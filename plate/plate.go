@@ -1,4 +1,4 @@
-package fill
+package plate
 
 type Plate struct {
 	Width int

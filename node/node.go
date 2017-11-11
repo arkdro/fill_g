@@ -1,4 +1,4 @@
-package fill
+package node
 
 type Node struct {
 	X int
