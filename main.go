@@ -8,6 +8,7 @@ import (
 	"flag"
 	"io/ioutil"
 	"log"
+	"reflect"
 )
 
 type Request struct {
@@ -95,7 +96,7 @@ func valid_data(plate fill.Plate) bool {
 }
 
 func plates_equal(result fill.Plate, expected fill.Plate) bool {
-	return true
+	return reflect.DeepEqual(result, expected)
 }
 
 func write_result(file string, result fill.Plate) {
