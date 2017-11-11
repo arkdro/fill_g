@@ -60,7 +60,7 @@ func process_files(files []string) {
 			continue
 		}
 		log.Printf("process_files, request: %+v", request)
-		result := fill.Run(request.Start_point, request.Color, request.Input_data)
+		result := run_request(request)
 		if !plates_equal(result, request.Expected_data) {
 			log.Printf("process_files, result mismatch for file: %v", file)
 			write_result(file, result)
@@ -108,5 +108,10 @@ func write_result(file string, result fill.Plate) {
 	}
 	fname := file + "-result"
 	ioutil.WriteFile(fname, data, 0644)
+}
+
+func run_request(request Request) fill.Plate {
+	result := fill.Run(request.Start_point, request.Color, request.Input_data)
+	return result
 }
 
