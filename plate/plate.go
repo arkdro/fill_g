@@ -69,3 +69,21 @@ func (plate Plate) Get_up_node(orig node.Node) (node.Node, bool) {
 	return node.Node{}, false
 }
 
+func (plt Plate) Valid_data() bool {
+	if plt.Width <= 0 {
+		return false
+	}
+	if plt.Height <= 0 {
+		return false
+	}
+	if len(plt.Data) != plt.Height {
+		return false
+	}
+	for _, row := range plt.Data {
+		if len(row) != plt.Width {
+			return false
+		}
+	}
+	return true
+}
+

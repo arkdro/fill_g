@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/asdf/fill_g/fill"
+	"github.com/asdf/fill_g/node"
+	"github.com/asdf/fill_g/plate"
 
 	"encoding/json"
 	"errors"
@@ -80,19 +82,15 @@ func read_request(file string) (Request, error) {
 		log.Printf("can't parse file '%v': %v", file, err)
 		return request, err
 	}
-	if !valid_data(request.Input_data) {
+	if !request.Input_data.Valid_data() {
 		log.Printf("invalid plate data in file: %v", file)
 		return request, errors.New("invalid plate data")
 	}
-	if !valid_data(request.Expected_data) {
+	if !request.Expected_data.Valid_data() {
 		log.Printf("invalid expected data in file: %v", file)
 		return request, errors.New("invalid expected data")
 	}
 	return request, nil
-}
-
-func valid_data(plate fill.Plate) bool {
-	return true
 }
 
 func plates_equal(result fill.Plate, expected fill.Plate) bool {
