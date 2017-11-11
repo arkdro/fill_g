@@ -23,3 +23,49 @@ func (plate *Plate) Set_color(node node.Node, color int) {
 	plate.Data[y][x] = color
 }
 
+func (plate Plate) Get_left_node(orig node.Node) (node.Node, bool) {
+	if orig.X > 0 {
+		n := node.Node{
+			X: orig.X - 1,
+			Y: orig.Y,
+		}
+		return n, true
+	}
+	return node.Node{}, false
+}
+
+func (plate Plate) Get_right_node(orig node.Node) (node.Node, bool) {
+	width := plate.Width
+	if orig.X < width - 1 {
+		n := node.Node{
+			X: orig.X + 1,
+			Y: orig.Y,
+		}
+		return n, true
+	}
+	return node.Node{}, false
+}
+
+func (plate Plate) Get_down_node(orig node.Node) (node.Node, bool) {
+	if orig.Y > 0 {
+		n := node.Node{
+			X: orig.X,
+			Y: orig.Y - 1,
+		}
+		return n, true
+	}
+	return node.Node{}, false
+}
+
+func (plate Plate) Get_up_node(orig node.Node) (node.Node, bool) {
+	height := plate.Height
+	if orig.Y < height - 1 {
+		n := node.Node{
+			X: orig.X,
+			Y: orig.Y + 1,
+		}
+		return n, true
+	}
+	return node.Node{}, false
+}
+
