@@ -1,22 +1,26 @@
 package queue
 
-// fifo queue for int numbers
+// fifo queue for nodes
 
-type Queue []int
+import (
+	"github.com/asdf/fill_g/node"
+)
+
+type Queue []node.Node
 
 func New() Queue {
-	return make([]int, 0)
+	return make([]node.Node, 0)
 }
 
 func (q Queue) Empty() bool {
 	return len(q) == 0
 }
 
-func (q *Queue) Push(x int) {
+func (q *Queue) Push(x node.Node) {
 	*q = append(*q, x)
 }
 
-func (q *Queue) Pop() int {
+func (q *Queue) Pop() node.Node {
 	x := (*q)[0]
 	*q = (*q)[1:]
 	return x
