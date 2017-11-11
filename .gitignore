@@ -3,3 +3,6 @@ fill_g
 *~
 *.sw?
 TAGS
+
+f*.json
+f*.json-result
