@@ -138,8 +138,10 @@ func write_result(file string, result plate.Plate) {
 func run_request(request Request) plate.Plate {
 	plate := request.Input_data
 	for _, step := range request.Steps {
+		rlog.Debug("run_request, plate:", plate)
 		plate = fill.Run(step.Point, step.Color, plate)
 	}
+	rlog.Debug("run_request, result plate:", plate)
 	return plate
 }
 
