@@ -58,6 +58,8 @@ func process_files(files []string) {
 		log.Printf("process_files, file: %v", file)
 		request, err := read_request(file)
 		if err != nil {
+			log.Printf("process_files, can't read request for file '%v': %v",
+				file, err)
 			continue
 		}
 		log.Printf("process_files, request: %+v", request)
