@@ -51,12 +51,15 @@ func handle_neighbour_node(node node.Node, queue queue.Queue, old_color int, col
 }
 
 func node_fits(node node.Node, old_color int, plate plate.Plate) bool {
-	color := plate.Get_color(node)
-	return color == old_color
+	return same_color(node, old_color, plate)
 }
 
 func already_filled(start_point node.Node, color int, plate plate.Plate) bool {
-	old_color := plate.Get_color(start_point)
-	return color == old_color
+	return same_color(start_point, color, plate)
+}
+
+func same_color(node node.Node, color int, plate plate.Plate) bool {
+	existing_color := plate.Get_color(node)
+	return color == existing_color
 }
 
