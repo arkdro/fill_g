@@ -1,6 +1,8 @@
 package fill
 
 import (
+	"github.com/romana/rlog"
+
 	"github.com/asdf/fill_g/node"
 	"github.com/asdf/fill_g/plate"
 	"github.com/asdf/fill_g/queue"
@@ -24,6 +26,7 @@ func loop(queue *queue.Queue, old_color int, color int, plate plate.Plate) {
 			return
 		}
 		n := (*queue).Pop()
+		rlog.Debug("loop, color:", color, ", node:", n)
 		left, ok := plate.Get_left_node(n)
 		if ok {
 			handle_neighbour_node(left, queue, old_color, color, plate)

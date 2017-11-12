@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/romana/rlog"
+
 	"github.com/asdf/fill_g/fill"
 	"github.com/asdf/fill_g/node"
 	"github.com/asdf/fill_g/plate"
@@ -59,7 +61,7 @@ func get_files_in_dir(dir string) []string {
 
 func process_files(files []string) {
 	for _, file := range files {
-		log.Printf("process_files, file: %v", file)
+		rlog.Info("process_files, file:", file)
 		request, err := read_request(file)
 		if err != nil {
 			log.Printf("process_files, can't read request for file '%v': %v",
@@ -75,6 +77,7 @@ func process_files(files []string) {
 }
 
 func read_request(file string) (Request, error) {
+	rlog.Info("read_request, file:", file)
 	var request Request
 	bin_data, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -121,6 +124,7 @@ func plates_equal(result plate.Plate, expected plate.Plate) bool {
 }
 
 func write_result(file string, result plate.Plate) {
+	rlog.Info("write_result, file:", file)
 	data, err := json.Marshal(result)
 	if err != nil {
 		log.Printf("can't encode result to json for file '%v': %v\n%+v",
