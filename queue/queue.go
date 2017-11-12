@@ -26,3 +26,7 @@ func (q *Queue) Pop() node.Node {
 	return x
 }
 
+func (q Queue) Len() int {
+	return len(q)
+}
+
