@@ -14,16 +14,16 @@ func Run(start_point node.Node, color int, plate plate.Plate) plate.Plate {
 	old_color := plate.Get_color(start_point)
 	plate.Set_color(start_point, color)
 	queue.Push(start_point)
-	loop(queue, old_color, color, plate)
+	loop(&queue, old_color, color, plate)
 	return plate
 }
 
-func loop(queue queue.Queue, old_color int, color int, plate plate.Plate) {
+func loop(queue *queue.Queue, old_color int, color int, plate plate.Plate) {
 	for {
-		if queue.Empty() {
+		if (*queue).Empty() {
 			return
 		}
-		n := queue.Pop()
+		n := (*queue).Pop()
 		left, ok := plate.Get_left_node(n)
 		if ok {
 			handle_neighbour_node(left, queue, old_color, color, plate)
@@ -43,7 +43,7 @@ func loop(queue queue.Queue, old_color int, color int, plate plate.Plate) {
 	}
 }
 
-func handle_neighbour_node(node node.Node, queue queue.Queue, old_color int, color int, plate plate.Plate) {
+func handle_neighbour_node(node node.Node, queue *queue.Queue, old_color int, color int, plate plate.Plate) {
 	if node_fits(node, old_color, plate) {
 		plate.Set_color(node, color)
 		queue.Push(node)
