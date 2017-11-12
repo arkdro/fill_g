@@ -70,7 +70,9 @@ func process_files(files []string) {
 		}
 		result := run_request(request)
 		if !plates_equal(result, request.Expected_data) {
-			log.Printf("process_files, result mismatch for file: %v", file)
+			rlog.Warn("process_files, result mismatch, file:", file,
+				"\nresult:", result,
+				"\nexpected:", request.Expected_data)
 			write_result(file, result)
 		}
 	}
