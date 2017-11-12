@@ -2,5 +2,10 @@
 	"ImportPath": "github.com/asdf/fill_g",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v79",
-	"Deps": []
+	"Deps": [
+		{
+			"ImportPath": "github.com/romana/rlog",
+			"Rev": "9dd10fbe7ef7daab565c18f9154b5f4fc664177c"
+		}
+	]
 }
