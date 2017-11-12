@@ -62,7 +62,6 @@ func process_files(files []string) {
 				file, err)
 			continue
 		}
-		log.Printf("process_files, request: %+v", request)
 		result := run_request(request)
 		if !plates_equal(result, request.Expected_data) {
 			log.Printf("process_files, result mismatch for file: %v", file)
