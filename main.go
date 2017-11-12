@@ -12,9 +12,13 @@ import (
 	"log"
 )
 
-type Request struct {
-	Start_point node.Node
+type Step struct {
+	Point node.Node
 	Color int
+}
+
+type Request struct {
+	Steps []Step
 	Input_data plate.Plate
 	Expected_data plate.Plate
 }
@@ -128,7 +132,10 @@ func write_result(file string, result plate.Plate) {
 }
 
 func run_request(request Request) plate.Plate {
-	result := fill.Run(request.Start_point, request.Color, request.Input_data)
-	return result
+	plate := request.Input_data
+	for _, step := range request.Steps {
+		plate = fill.Run(step.Point, step.Color, plate)
+	}
+	return plate
 }
 
