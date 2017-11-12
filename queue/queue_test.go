@@ -34,6 +34,9 @@ func Test_Push(t *testing.T) {
 	data[0] = node.Node{X: 1, Y: 2}
 	data[1] = node.Node{X: 2, Y: 22}
 	data[2] = node.Node{X: 3, Y: 33}
+	if q.Len() != len(data) {
+		t.Error("queue push length mismatch")
+	}
 	for i, _ := range data {
 		if !reflect.DeepEqual(q[i], data[i]) {
 			t.Error("queue push mismatch at", i, ", items:", q[i], data[i])
