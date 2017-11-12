@@ -10,7 +10,6 @@ import (
 	"flag"
 	"io/ioutil"
 	"log"
-	"reflect"
 )
 
 type Request struct {
@@ -94,7 +93,26 @@ func read_request(file string) (Request, error) {
 }
 
 func plates_equal(result plate.Plate, expected plate.Plate) bool {
-	return reflect.DeepEqual(result, expected)
+	if result.Width != expected.Width {
+		return false
+	}
+	if result.Height != expected.Height {
+		return false
+	}
+	if len(result.Data) != len(expected.Data) {
+		return false
+	}
+	for y, _ := range result.Data {
+		if len(result.Data[y]) != len(expected.Data[y]) {
+			return false
+		}
+		for x, _ := range result.Data[y] {
+			if result.Data[y][x] != expected.Data[y][x] {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 func write_result(file string, result plate.Plate) {
