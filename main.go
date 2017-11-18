@@ -12,6 +12,7 @@ import (
 	"flag"
 	"io/ioutil"
 	"log"
+	"os"
 	"path"
 )
 
@@ -29,11 +30,12 @@ type Request struct {
 func main() {
 	var file = flag.String("infile", "", "input file")
 	var dir = flag.String("indir", "", "input file")
+	var remove = flag.Bool("remove", false, "remove input file on success")
 	flag.Parse()
-	run(*file, *dir)
+	run(*file, *dir, *remove)
 }
 
-func run(file string, dir string) {
+func run(file string, dir string, remove bool) {
 	files := make([]string, 0)
 	if file != "" {
 		files = append(files, file)
@@ -43,7 +45,7 @@ func run(file string, dir string) {
 		log.Printf("No parameters given")
 		return
 	}
-	process_files(files)
+	process_files(files, remove)
 }
 
 func get_files_in_dir(dir string) []string {
@@ -61,7 +63,7 @@ func get_files_in_dir(dir string) []string {
 	return names
 }
 
-func process_files(files []string) {
+func process_files(files []string, remove bool) {
 	for _, file := range files {
 		rlog.Info("process_files, file:", file)
 		request, err := read_request(file)
@@ -76,6 +78,10 @@ func process_files(files []string) {
 				"\nresult:", result,
 				"\nexpected:", request.Expected_data)
 			write_result(file, result)
+		} else {
+			if remove {
+				os.Remove(file)
+			}
 		}
 	}
 }
