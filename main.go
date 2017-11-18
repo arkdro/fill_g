@@ -12,6 +12,7 @@ import (
 	"flag"
 	"io/ioutil"
 	"log"
+	"path"
 )
 
 type Step struct {
@@ -54,7 +55,8 @@ func get_files_in_dir(dir string) []string {
 	}
 	names := make([]string, 0)
 	for _, file := range files {
-		names = append(names, file.Name())
+		fname := path.Join(dir, file.Name())
+		names = append(names, fname)
 	}
 	return names
 }
